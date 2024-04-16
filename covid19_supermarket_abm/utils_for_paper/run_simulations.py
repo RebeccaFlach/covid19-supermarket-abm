@@ -67,17 +67,18 @@ def load_data_for_sim(store_id, graph_params, data_dir):
     return G, extra_outputs
 
 
-def run_several_simulations(config_name, num_iterations, multiplier_list, param='arrival_rate',
+def run_several_simulations(config_original, num_iterations, multiplier_list, param='arrival_rate',
                             config_dir='.', data_dir='.', results_dir='.'):
     """Run several simulations where we vary over a specific parameter."""
 
     # Load data and set parameters
-    config_filename = os.path.join(config_dir, f"{config_name}.json")
-    config_original = json.load(open(config_filename))
-    logging.info(f'Loaded config file: {config_filename}')
+    # config_filename = os.path.join(config_dir, f"{config_name}.json")
+    # config_original = json.load(open(config_filename))
+    # logging.info(f'Loaded config file: {config_filename}')
     store_id = config_original['store_id']
     path_generation = config_original.get('path_generation', 'synthetic')
     G, extra_outputs = load_data_for_sim(store_id, config_original, data_dir)
+
     path_generator_function, path_generator_args = get_path_generator(path_generation, G=G, zone_paths=extra_outputs,
                                                                       synthetic_path_generator_args=extra_outputs)
 
@@ -95,15 +96,15 @@ def run_several_simulations(config_name, num_iterations, multiplier_list, param=
             os.mkdir(results_folder)
 
         # Save results
-        filename1 = os.path.join(results_folder, f'{config_name}_{multiplier * 100:.0f}_{num_iterations}_1.parquet')
+        filename1 = os.path.join(results_folder, f'{"test"}_{multiplier * 100:.0f}_{num_iterations}_1.parquet')
         df_cust.to_parquet(filename1)
 
         df_num_encounter_per_node_stats.columns = df_num_encounter_per_node_stats.columns.astype(str)
-        filename2 = os.path.join(results_folder, f'{config_name}_{multiplier * 100:.0f}_{num_iterations}_2.parquet')
+        filename2 = os.path.join(results_folder, f'{"test"}_{multiplier * 100:.0f}_{num_iterations}_2.parquet')
         df_num_encounter_per_node_stats.to_parquet(filename2)
 
         df_exposure_time_per_node_stats.columns = df_exposure_time_per_node_stats.columns.astype(str)
-        filename3 = os.path.join(results_folder, f'{config_name}_{multiplier * 100:.0f}_{num_iterations}_3.parquet')
+        filename3 = os.path.join(results_folder, f'{"test"}_{multiplier * 100:.0f}_{num_iterations}_3.parquet')
         df_exposure_time_per_node_stats.to_parquet(filename3)
         logging.info(f'Results saved in {filename1}, {filename2}, {filename3}.')
 

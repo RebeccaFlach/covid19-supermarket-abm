@@ -11,11 +11,11 @@ from covid19_supermarket_abm.utils_for_paper.load_graph import get_floor_area
 
 
 def load_data(config_name, param, num_iterations, truncate=False, use_old_data=False):
-    config = json.load(open(f'../configs/{config_name}.json'))
+    config = json.load(open(f'configs/{config_name}.json'))
 
     df_custs = []
     multipliers = []
-    directory = f'../results/{param}/'
+    directory = f'results/{param}/'
     if use_old_data:
         directory = f'../results/old/{param}/'
     for p in pathlib.Path(directory).iterdir():

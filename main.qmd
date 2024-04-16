@@ -1,0 +1,43 @@
+---
+jupyter: python3
+---
+
+```{python}
+%load_ext autoreload
+%autoreload 2
+```
+
+```{python}
+import json
+config = {'arrival_rate': 2.55,  # Poisson rate at which customers arrive
+           'traversal_time': 0.2,  # mean wait time per node
+           'num_hours_open': 14,  # store opening hours
+           'infection_proportion': 0.0011,  # proportion of customers that are infectious
+           'store_id': 2, 
+           'mu_basketsize': 1,
+           'sigma_basketsize': 1,
+         }
+
+with open("configs/test.json", "w") as outfile: 
+    json.dump(config, outfile)
+```
+
+```{python}
+from covid19_supermarket_abm.utils_for_paper.run_simulations import run_several_simulations
+
+run_several_simulations(config, 1, [1], results_dir="results")
+```
+
+```{python}
+from covid19_supermarket_abm.utils_for_paper.results_analysis import plot_graph_with_error_bars 
+from covid19_supermarket_abm.utils_for_paper.results_analysis import load_data
+
+data, data1 = load_data("test", "arrival_rate", 1)
+# plot_graph_with_error_bars(["test"], )
+```
+
+```{python}
+data
+# data1
+```
+

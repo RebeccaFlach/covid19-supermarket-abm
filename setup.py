@@ -22,7 +22,6 @@ setuptools.setup(
 
     packages=setuptools.find_packages(
         exclude=[
-            '*utils_for_paper',
             '*tests'
         ]
     ),
